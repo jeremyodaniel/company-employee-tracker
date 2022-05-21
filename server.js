@@ -9,6 +9,7 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 // connect to database
+
 const db = mysql.createConnection(
   {
     host: 'localhost',
@@ -19,6 +20,10 @@ const db = mysql.createConnection(
   console.log('Connected to the employees database.')
 );
 
+// Default response for any other request (Not Found)
+app.use((req, res) => {
+  res.status(404).end();
+});
 
 app.listen(PORT, () => {
   console.log(`Server running on port $(PORT)`);
