@@ -36,26 +36,11 @@ app.get('/api/employees', (req, res) => {
   });
 });
 
-// Get all candidates
-app.get('/api/candidates', (req, res) => {
-  const sql = `SELECT * FROM candidates`;
 
-  db.query(sql, (err, rows) => {
-    if (err) {
-      res.status(500).json({ error: err.message });
-      return;
-    }
-    res.json({
-      message: 'success',
-      data: rows
-    });
-  });
+//  Default response for any other request (Not Found)
+app.use((req, res) => {
+  res.status(404).end();
 });
-
-// Default response for any other request (Not Found)
-//app.use((req, res) => {
-//  res.status(404).end();
-//});
 
 app.listen(PORT, () => {
   console.log(`Server running on port 3001`);
