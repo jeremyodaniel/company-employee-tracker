@@ -9,13 +9,13 @@ initialize();
 function initialize() {
   console.log('This is your employee tracker!');
   showOptions();
-}
+};
 
 function showOptions() {
   inquirer.prompt([
     {
       type: 'list',
-      name: 'options',
+      name: 'option',
       message: 'Please select an action below: ',
       choices: [
         'View All Employees',
@@ -40,10 +40,10 @@ function showOptions() {
         viewAllRoles();
         break;
       case 'Add an employee':
-        viewAllRoles();
+        addEmployee();
         break;  
       case 'Add a department':
-        addEmployee();
+        addDepartment();
         break;        
       case 'Add a role':
         addRole();
@@ -53,7 +53,7 @@ function showOptions() {
         break;
     }
   });
-}
+};
 
 function viewAllEmployees() {
   db.findAllEmployees()
@@ -63,7 +63,7 @@ function viewAllEmployees() {
       console.table(employees);
     })
     .then(() => {showOptions()})
-}
+};
 
 function viewDepartments() {
   db.findAllDepartments()
@@ -73,7 +73,7 @@ function viewDepartments() {
       console.table(departments);
     })
     .then(()=> {showOptions()})
-}
+};
 
 function viewRoles() {
   db.findAllRoles()
@@ -83,7 +83,7 @@ function viewRoles() {
       console.table(roles);
     })
     .then(()=> {showOptions()})
-}
+  };
 
 function addEmployee() {
   inquirer
@@ -114,7 +114,7 @@ function addEmployee() {
         console.log('\n');
         console.log(`${answer.first_name} ${answer.last_name} was added to the database.`);
     })
-}
+};
 
 function addDepartment() {
   inquirer
@@ -134,7 +134,7 @@ function addDepartment() {
           })
           .then(() => {showOptions()})
       })
-}
+};
 
 function addRole() {
   inquirer
@@ -159,41 +159,40 @@ function addRole() {
         console.log('/n');
         console.log(`You added a new role called: ${answer.title}`)
       })
-}
+};
 
 function updateRole() {
   db.findAllEmployees()
-  .then(([rows])=> {
-    let employees = rows;
-    const employeeOptions = employees.map(({
-      id,
-      first_name,
-      last_name}) => ({name: `${first_name} ${last_name}`, value: id}))
-  inquirer.prompt([{
-    type:'list',
-    name:'employeeId',
-    message: 'Which employee would you like to update?',
-    choices: employeeOptions
-  }])
-  .then(res => {
-    let employeeId = res.employeeId;
-    db.findAllRoles()
     .then(([rows])=> {
-      let roles = rows;
-      const roleOptions = roles.map(({
+      let employees = rows;
+      const employeeOptions = employees.map(({
         id,
-        title
-      })=> ({name: title, value: id}));
-      inquirer.prompt([{
-        type:'list',
-        name:'roleId',
-        message: 'Which role would you like to assign?',
-        choices: roleOptions
-      }])
-      .then(res => db.updateRole(employeeId, res.roleId))
-      .then(() => showOptions())
+        first_name,
+        last_name}) => ({name: `${first_name} ${last_name}`, value: id}))
+    inquirer.prompt([{
+      type:'list',
+      name:'employeeId',
+      message: 'Which employee would you like to update?',
+      choices: employeeOptions
+    }])
+    .then(res => {
+      let employeeId = res.employeeId;
+      db.findAllRoles()
+      .then(([rows])=> {
+        let roles = rows;
+        const roleOptions = roles.map(({
+          id,
+          title
+        })=> ({name: title, value: id}));
+        inquirer.prompt([{
+          type:'list',
+          name:'roleId',
+          message: 'Which role would you like to assign?',
+          choices: roleOptions
+        }])
+        .then(res => db.updateRole(employeeId, res.roleId))
+        .then(() => showOptions())
+      })
     })
-  })
-})
-   
-}
+  })   
+};
