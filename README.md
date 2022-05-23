@@ -7,8 +7,8 @@ An application to track some information about your employees. Add departments, 
 Clone this app locally and run in you CLI using the command, 'node index.js'.
 
 ## Video
-Click the link to see the deployed website.  
-[https://note-taker-33223.herokuapp.com/](https://drive.google.com/file/d/1osmut8NgHsihZLjs42YtxKSe91NtSF3m/view)
+Click the link to see the video.
+[Employee Tracker](https://drive.google.com/file/d/1osmut8NgHsihZLjs42YtxKSe91NtSF3m/view)
 
 ## Licenses
 MIT
